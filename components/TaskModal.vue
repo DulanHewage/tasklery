@@ -13,7 +13,6 @@
 import type { Task } from "@/types";
 import { QuillEditor } from "@vueup/vue-quill";
 import { useTasksStore } from "~/store/tasks";
-import "@vueup/vue-quill/dist/vue-quill.snow.css";
 
 const { getColumnByTaskId } = useTasksStore();
 const columnTitle = computed(() => getColumnByTaskId(props.task.id)?.title);

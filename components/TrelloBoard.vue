@@ -41,9 +41,7 @@
     :task="selectedTask"
     v-if="selectedTask"
     @close="selectedTask = null"
-  >
-    modal
-  </TaskModal>
+  ></TaskModal>
 </template>
 <script setup lang="ts">
 import type { Column, Task } from "@/types";
