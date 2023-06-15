@@ -25,7 +25,7 @@
           >
             <template #item="{ element: task }: { element: Task }">
               <div>
-                <TrelloBoardTask :task="task" />
+                <TrelloBoardTask :task="task" @select="onTaskSelect" />
               </div>
             </template>
           </draggable>
@@ -37,75 +37,28 @@
       </template>
     </draggable>
   </div>
+  <TaskModal
+    :task="selectedTask"
+    v-if="selectedTask"
+    @close="selectedTask = null"
+  >
+    modal
+  </TaskModal>
 </template>
 <script setup lang="ts">
 import type { Column, Task } from "@/types";
-import { nanoid } from "nanoid";
 import draggable from "vuedraggable";
+import { useTasksStore } from "~/store/tasks";
+import { storeToRefs } from "pinia";
+
+const { columns } = storeToRefs(useTasksStore());
+const selectedTask = ref<Task | null>(null);
 
 const alt = useKeyModifier("Alt");
 
-const columns = ref<Column[]>([
-  {
-    id: nanoid(),
-    title: "To do",
-    tasks: [
-      {
-        id: nanoid(),
-        title: "Task 1",
-        createdAt: new Date(),
-      },
-      {
-        id: nanoid(),
-        title: "Task 2",
-        createdAt: new Date(),
-      },
-      {
-        id: nanoid(),
-        title: "Task 3",
-        createdAt: new Date(),
-      },
-    ],
-  },
-  {
-    id: nanoid(),
-    title: "In progress",
-    tasks: [
-      {
-        id: nanoid(),
-        title: "Task 4",
-        createdAt: new Date(),
-      },
-      {
-        id: nanoid(),
-        title: "Task 5",
-        createdAt: new Date(),
-      },
-    ],
-  },
-  {
-    id: nanoid(),
-    title: "Done",
-    tasks: [
-      {
-        id: nanoid(),
-        title: "Task 6",
-        createdAt: new Date(),
-      },
-    ],
-  },
-  {
-    id: nanoid(),
-    title: "Done",
-    tasks: [
-      {
-        id: nanoid(),
-        title: "Task 6",
-        createdAt: new Date(),
-      },
-    ],
-  },
-]);
+const onTaskSelect = (task: Task) => {
+  selectedTask.value = task;
+};
 </script>
 
 <style lang="scss" scoped>

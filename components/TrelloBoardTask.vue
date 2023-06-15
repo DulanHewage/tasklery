@@ -2,6 +2,7 @@
   <div
     :title="task.createdAt.toLocaleDateString()"
     class="task flex justify-between items-center bg-white p-2 mb-2 mt-2 rounded shadow-sm max-w-[250px] cursor-pointer group"
+    @click="emit('select', task)"
   >
     <span>{{ task.title }}</span>
     <div
@@ -20,6 +21,7 @@ const props = defineProps<{
 
 const emit = defineEmits<{
   (e: "delete", payload: ID): void;
+  (e: "select", payload: Task): void;
 }>();
 
 const deleteTask = () => emit("delete", props.task.id);
