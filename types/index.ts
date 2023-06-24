@@ -11,4 +11,17 @@ export interface Task {
   title: string;
   createdAt: Date;
   description?: string;
+  checkList?: CheckList;
+}
+
+export interface CheckListItem {
+  id: ID;
+  text: string;
+  checked: boolean;
+}
+
+export interface CheckList {
+  id: ID;
+  title: string;
+  items: CheckListItem[];
 }

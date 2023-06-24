@@ -4,19 +4,27 @@
   </button>
 </template>
 <script setup lang="ts">
-// prop for button types
+// props for button types, sizes, etc.
 // primary, secondary, danger, warning, success, info, light, dark
-const props = defineProps<{
-  type:
-    | "primary"
-    | "secondary"
-    | "danger"
-    | "warning"
-    | "success"
-    | "info"
-    | "light"
-    | "dark";
-}>();
+
+const props = withDefaults(
+  defineProps<{
+    type:
+      | "primary"
+      | "secondary"
+      | "danger"
+      | "warning"
+      | "success"
+      | "info"
+      | "light"
+      | "dark";
+    size?: "sm" | "md" | "lg";
+  }>(),
+  {
+    type: "primary",
+    size: "md",
+  }
+);
 
 const backgroundColors = {
   primary: {
@@ -55,14 +63,15 @@ const backgroundColors = {
 
 const classes = computed(() => {
   return [
-    "px-4",
-    "py-2",
     "rounded",
     "text-white",
     "transition-colors",
     "duration-200",
     backgroundColors[props.type].initial,
     `hover:${backgroundColors[props.type].hover}`,
+    props.size === "sm" && "px-3 py-1",
+    props.size === "md" && "px-4 py-2",
+    props.size === "lg" && "px-5 py-3",
   ];
 });
 </script>

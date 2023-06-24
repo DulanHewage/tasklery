@@ -5,10 +5,7 @@
     :header="props.task.title"
     :subHeader="'in list ' + columnTitle"
   >
-    <div class="mt-2 flex items-center mb-2">
-      <Icon name="mdi:format-align-left" size="18px" class="mr-1" />
-      <span class="text-l font-bold">Description</span>
-    </div>
+    <BaseTaskSubTitle subtitle="Description" icon="mdi:format-align-left" />
     <div
       class="mt-2 mb-4 description"
       :class="{
@@ -33,6 +30,8 @@
         <BaseButton type="secondary" @click="cancelEditing">Cancel</BaseButton>
       </div>
     </div>
+    <BaseTaskSubTitle subtitle="Activity" icon="mdi:format-list-triangle" />
+    <TaskCheckList :task="props.task" />
   </BaseModal>
 </template>
 <script setup lang="ts">
