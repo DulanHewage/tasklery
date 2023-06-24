@@ -1,4 +1,4 @@
-import type { Column } from "@/types";
+import type { Column, Task } from "@/types";
 import { nanoid } from "nanoid";
 export const useTasksStore = defineStore("tasks", () => {
   const columns = ref<Column[]>([
@@ -69,8 +69,19 @@ export const useTasksStore = defineStore("tasks", () => {
     );
   };
 
+  const updateTask = (taskId: string, newTask: Partial<Task>) => {
+    const column = getColumnByTaskId(taskId);
+    if (!column) return;
+
+    const task = column.tasks.find((task) => task.id === taskId);
+    if (!task) return;
+
+    Object.assign(task, newTask);
+  };
+
   return {
     columns,
     getColumnByTaskId,
+    updateTask,
   };
 });

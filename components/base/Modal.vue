@@ -12,7 +12,7 @@
           :class="{ hidden: !props.header }"
         >
           <Icon :name="props.headerAppendIcon" size="20px" />
-          <div class="text-xl ml-2">{{ props.header }}</div>
+          <div class="text-xl ml-2 font-bold">{{ props.header }}</div>
         </div>
         <Icon
           :name="props.headerPrependIcon"
