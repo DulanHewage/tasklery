@@ -4,7 +4,7 @@
     class="task flex justify-between items-center bg-white p-2 mb-2 mt-2 rounded shadow-sm max-w-[250px] cursor-pointer group"
     @click="emit('select', task)"
   >
-    <span>{{ task.title }}</span>
+    <span data-test="task-title">{{ task.title }}</span>
     <div
       class="opacity-0 group-hover:opacity-100 transition duration-150 ease-in-out"
     >
