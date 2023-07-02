@@ -15,7 +15,10 @@ describe("NewTask", () => {
     const textarea = wrapper.find("textarea");
 
     await textarea.setValue("New Task Title");
-    expect(wrapper.vm.title).toBe("New Task Title");
+
+    const vueInstance: any = wrapper.vm;
+
+    expect(vueInstance.title).toBe("New Task Title");
   });
 
   it('emits an "add" event when Enter key is pressed with non-empty title', async () => {
@@ -25,8 +28,10 @@ describe("NewTask", () => {
     await textarea.setValue("New Task Title");
     await textarea.trigger("keyup.enter");
 
+    const addEvent = wrapper.emitted("add") as any;
+
     expect(wrapper.emitted("add")).toBeTruthy();
-    expect(wrapper.emitted("add")[0][0]).toEqual(
+    expect(addEvent[0][0]).toEqual(
       expect.objectContaining({
         title: "New Task Title",
       })
