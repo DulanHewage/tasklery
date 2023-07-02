@@ -11,21 +11,32 @@
           class="header-left flex items-center"
           :class="{ hidden: !props.header }"
         >
-          <Icon :name="props.headerAppendIcon" size="20px" />
-          <div class="text-xl ml-2 font-bold">{{ props.header }}</div>
+          <Icon
+            :name="props.headerAppendIcon"
+            size="20px"
+            data-test="modal-header-append-icon"
+          />
+          <div class="text-xl ml-2 font-bold" data-test="modal-header">
+            {{ props.header }}
+          </div>
         </div>
         <Icon
           :name="props.headerPrependIcon"
           @click="emit('close')"
           class="cursor-pointer"
           size="20px"
+          data-test="modal-header-prepend-icon"
         />
       </div>
 
-      <div class="text-sm ml-7" v-if="props.subHeader">
+      <div
+        class="text-sm ml-7"
+        v-if="props.subHeader"
+        data-test="modal-subheader"
+      >
         {{ props.subHeader }}
       </div>
-      <div class="body pt-2">
+      <div class="body pt-2" data-test="modal-body">
         <slot></slot>
       </div>
     </div>
