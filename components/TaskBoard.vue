@@ -25,7 +25,7 @@
           >
             <template #item="{ element: task }: { element: Task }">
               <div>
-                <TrelloBoardTask :task="task" @select="onTaskSelect" />
+                <TaskCard :task="task" @select="onTaskSelect" />
               </div>
             </template>
           </draggable>
@@ -48,6 +48,7 @@ import type { Column, Task } from "@/types";
 import draggable from "vuedraggable";
 import { useTasksStore } from "~/store/tasks";
 import { storeToRefs } from "pinia";
+import TaskCard from "./TaskCard.vue";
 
 const { columns } = storeToRefs(useTasksStore());
 const selectedTask = ref<Task | null>(null);
