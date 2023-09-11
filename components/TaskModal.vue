@@ -7,16 +7,19 @@
   >
     <BaseTaskSubTitle subtitle="Description" icon="mdi:format-align-left" />
     <div
-      class="mt-2 mb-4 description"
-      :class="{
-        'bg-slate-200 h-5 flex items-end px-3 py-8 rounded text-gray-600 cursor-pointer':
-          isInitialDesc,
-      }"
+      class="mt-2 mb-4 bg-slate-200 h-5 flex items-end px-3 py-8 rounded text-gray-600 cursor-pointer"
+      @click="toggleEditor"
+      v-if="!isEditMode && isTaskDescriptionEmpty"
+    >
+      Add a more detailed description...
+    </div>
+    <div
+      class="mt-2 mb-4 bg-slate-200 items-end px-3 py-8 rounded text-gray-600 cursor-pointer description"
       v-html="desc"
       @click="toggleEditor"
-      v-if="!isEditMode"
+      v-show="!isEditMode && !isTaskDescriptionEmpty"
     ></div>
-    <div class="editor" v-else="isEditMode">
+    <div class="editor" v-show="isEditMode">
       <QuillEditor
         theme="snow"
         toolbar="essential"
@@ -30,8 +33,8 @@
         <BaseButton type="secondary" @click="cancelEditing">Cancel</BaseButton>
       </div>
     </div>
-    <BaseTaskSubTitle subtitle="Activity" icon="mdi:format-list-triangle" />
     <TaskCheckList :task="props.task" />
+    <BaseTaskSubTitle subtitle="Activity" icon="mdi:format-list-triangle" />
   </BaseModal>
 </template>
 <script setup lang="ts">
@@ -48,41 +51,27 @@ const emit = defineEmits<{
 }>();
 
 const { getColumnByTaskId } = useTasksStore();
-const editorPlaceholder = "<h4>Add a more detailed description...</h4>";
-const desc = ref<string | undefined>(editorPlaceholder);
+
+// set desc to the task description
+const desc = ref<string | undefined>(props.task.description);
+
 const isEditMode = ref(false);
 
 const columnTitle = computed(() => getColumnByTaskId(props.task.id)?.title);
-const isInitialDesc = computed(() => {
-  return desc.value === editorPlaceholder;
-});
+const isTaskDescriptionEmpty = computed(() => !props.task.description);
 
 const toggleEditor = () => {
   isEditMode.value = !isEditMode.value;
-  if (!isInitialDesc) {
-    return;
-  }
-  if (isEditMode.value) {
-    desc.value = "";
-  } else {
-    desc.value = editorPlaceholder;
+  if (!isTaskDescriptionEmpty) {
+    desc.value = props.task.description;
   }
 };
 
 const saveDescription = () => {
-  if (!desc.value) {
-    isEditMode.value = false;
-    desc.value = editorPlaceholder;
-    return;
-  }
-  if (isInitialDesc) {
-    isEditMode.value = false;
-    return;
-  }
   isEditMode.value = false;
   useTasksStore().updateTask(props.task.id, {
     ...props.task,
-    description: desc.value,
+    description: desc.value === "<p><br></p>" ? "" : desc.value,
   });
 };
 
@@ -141,6 +130,9 @@ const cancelEditing = () => {
   }
   &:deep(code) {
     @apply bg-gray-100 p-1 rounded;
+  }
+  &:deep(br) {
+    @apply my-2;
   }
 }
 </style>

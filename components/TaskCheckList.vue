@@ -7,9 +7,12 @@
   </BaseTaskSubTitle>
   <BaseProgressBar :progress="10" />
   <div class="mt-2">
-    <div class="flex items-center">
-      <Icon name="mdi:checkbox-blank-circle-outline" size="18px" />
-      <div class="ml-2">Add an item</div>
+    <div class="flex items-start flex-col">
+      <TaskCheckListItem />
+      <TaskCheckListItem />
+      <BaseButton type="secondary" size="sm">Add an item</BaseButton>
     </div>
   </div>
 </template>
+
+<script setup lang="ts"></script>

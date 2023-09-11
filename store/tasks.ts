@@ -10,11 +10,38 @@ export const useTasksStore = defineStore("tasks", () => {
           id: nanoid(),
           title: "Task 1",
           createdAt: new Date(),
+          checkList: {
+            id: nanoid(),
+            title: "check list 1",
+            items: [
+              {
+                id: nanoid(),
+                text: "check list item 1",
+                checked: true,
+              },
+              {
+                id: nanoid(),
+                text: "check list item 2",
+                checked: false,
+              },
+              {
+                id: nanoid(),
+                text: "check list item 3",
+                checked: false,
+              },
+              {
+                id: nanoid(),
+                text: "check list item 4",
+                checked: false,
+              },
+            ],
+          },
         },
         {
           id: nanoid(),
           title: "Task 2",
           createdAt: new Date(),
+          description: "<h2>hello</h2>",
         },
         {
           id: nanoid(),
